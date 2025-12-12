@@ -24,13 +24,13 @@ def edit(index):
         return render_template("edit.html", todo = todo, index = index)
 @app.route("/complete/<int:index>")
 def complete(index):
-    todos[index]["done"] = not  todos[index]["done"]
+    todos[index]["done"] = not todos[index]["done"]
     return redirect(url_for("index"))
 
 @app.route("/delete/<int:index>")
 def delete(index):
     del todos[index]
-    return redirect(url_for(index))
+    return redirect(url_for("index"))
     
 if __name__ == '__main__':
     app.run(debug=True)

@@ -2,14 +2,15 @@ from flask import Flask, request, render_template, redirect, url_for
 
 app = Flask(__name__, template_folder="templates")
 
-todos = [{"task" : "sample todo", "done" : False}]
+todos = []
 
 @app.route("/")
 def index():
     return render_template("index.html", todos=todos)
+
 @app.route("/add", methods=["POST"])
 def add():
-    todo = request.form[todo]
+    todo = request.form['todo']
     todos.append({"task": todo, "done" : False})
     return redirect(url_for("index"))
 
@@ -21,5 +22,15 @@ def edit(index):
         return render_template(url_for('index'))
     else: 
         return render_template("edit.html", todo = todo, index = index)
+@app.route("/complete/<int:index>")
+def complete(index):
+    todos[index]["done"] = not  todos[index]["done"]
+    return redirect(url_for("index"))
+
+@app.route("/delete/<int:index>")
+def delete(index):
+    del todos[index]
+    return redirect(url_for(index))
+    
 if __name__ == '__main__':
     app.run(debug=True)

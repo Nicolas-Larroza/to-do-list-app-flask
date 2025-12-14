@@ -19,7 +19,7 @@ def edit(index):
     todo = todos[index]
     if request.method == "POST":
         todo['task'] = request.form["todo"]
-        return render_template(url_for('index'))
+        return redirect(url_for("index"))
     else: 
         return render_template("edit.html", todo = todo, index = index)
 @app.route("/complete/<int:index>")
@@ -31,6 +31,9 @@ def complete(index):
 def delete(index):
     del todos[index]
     return redirect(url_for("index"))
+@app.route("/hello")
+def hello():
+    return "<h1>hello there! you found an easter-egg</h1>"
     
 if __name__ == '__main__':
     app.run(debug=True)
